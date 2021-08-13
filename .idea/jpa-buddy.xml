@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig">
+    <option name="flywayDirectory" value="db/migration" />
     <option name="defaultUnitInitialized" value="true" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="targetDbValue" value="6d6e6068-eefb-48ff-aed7-6c63d59c6b58" />
+    <option name="createEntityParentFqns">
+      <list>
+        <option value="" />
+        <option value="com.haulmont.astronomy.Customer" />
+        <option value="com.haulmont.astronomy.AstronomicalBody" />
+      </list>
+    </option>
   </component>
 </project>

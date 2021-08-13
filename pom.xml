@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <kotlin.version>1.4.31</kotlin.version>
+        <kotlin.version>1.5.21</kotlin.version>
     </properties>
 
     <dependencies>
@@ -59,12 +59,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.16</version>
-            <scope>provided</scope>
-        </dependency>
+
     </dependencies>
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
@@ -84,7 +79,13 @@
                     <compilerPlugins>
                         <plugin>spring</plugin>
                         <plugin>jpa</plugin>
+                        <plugin>all-open</plugin>
                     </compilerPlugins>
+                    <pluginOptions>
+                        <option>all-open:annotation=javax.persistence.Entity</option>
+                        <option>all-open:annotation=javax.persistence.MappedSuperclass</option>
+                        <option>all-open:annotation=javax.persistence.Embeddable</option>
+                    </pluginOptions>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -104,7 +105,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>7.7.3</version>
                 <configuration>
-                    <url>jdbc:hsqldb:file:~/petclinic/db;shutdown=true</url>
+                    <url>jdbc:hsqldb:file:~/astronomy/db;shutdown=true</url>
                     <user>sa</user>
                 </configuration>
             </plugin>
