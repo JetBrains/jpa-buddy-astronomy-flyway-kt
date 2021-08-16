@@ -1,6 +1,6 @@
 package com.haulmont.astronomy.model
 
-import com.haulmont.astronomy.basemodel.AstronomicalBody
+import com.haulmont.astronomy.model.basemodel.AstronomicalBody
 import org.hibernate.Hibernate
 import javax.persistence.*
 

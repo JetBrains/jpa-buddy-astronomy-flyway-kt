@@ -1,9 +1,8 @@
-package com.haulmont.astronomy.basemodel
+package com.haulmont.astronomy.model.basemodel
 
 import java.io.FileDescriptor
 import javax.persistence.*
 
-@Table(name = "astronomical_body")
 @MappedSuperclass
 class AstronomicalBody : BaseEntity() {
     @Column(name = "name")

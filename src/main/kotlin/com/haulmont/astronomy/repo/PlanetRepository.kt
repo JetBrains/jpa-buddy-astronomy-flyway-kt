@@ -11,6 +11,6 @@ interface PlanetRepository : JpaRepository<Planet, Long> {
     fun getAtmosphericGasesByName(name: String): List<AtmosphericGas>
 
 
-    fun findByName(name: String): Planet
+    fun findByName(name: String): Planet?
 
 }

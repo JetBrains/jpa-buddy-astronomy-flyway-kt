@@ -1,6 +1,7 @@
 package com.haulmont.astronomy.model
 
-import com.haulmont.astronomy.basemodel.AstronomicalBody
+import com.haulmont.astronomy.model.basemodel.AstronomicalBody
+import org.hibernate.Hibernate
 import javax.persistence.*
 
 @Table(name = "planet")
@@ -21,4 +22,14 @@ class Planet : AstronomicalBody() {
 
     @Column(name = "rings")
     var rings: Boolean? = null
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
+        other as Planet
+
+        return id != null && id == other.id
+    }
+
+    override fun hashCode(): Int = 1152863472
 }

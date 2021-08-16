@@ -10,7 +10,6 @@ interface MoonRepository : JpaRepository<Moon, Long> {
     fun findByName(name: String): Moon?
 
     @Query("select m from Moon m where m.planet.rings = ?1")
-    @Transactional(readOnly = true)
     fun findByPlanet_RingsEquals(rings: Boolean): List<Moon>
 
 }

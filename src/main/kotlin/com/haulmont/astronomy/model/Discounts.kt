@@ -1,7 +1,7 @@
 package com.haulmont.astronomy.model
 
-import com.haulmont.astronomy.basemodel.BaseEntity
-import com.haulmont.astronomy.enummodel.CustomerGrade
+import com.haulmont.astronomy.model.basemodel.BaseEntity
+import org.hibernate.Hibernate
 import java.math.BigDecimal
 import javax.persistence.*
 
@@ -11,7 +11,17 @@ class Discounts : BaseEntity() {
     @Column(name = "value", precision = 19, scale = 2)
     var value: BigDecimal? = null
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "grade")
     var grade: CustomerGrade? = null
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
+        other as Discounts
+
+        return id != null && id == other.id
+    }
+
+    override fun hashCode(): Int = 1236869400
 }

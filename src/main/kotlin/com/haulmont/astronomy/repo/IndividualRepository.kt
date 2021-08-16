@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface IndividualRepository : JpaRepository<Individual, Long> {
 
-    fun findByFirstNameAndEmail(firstName: String, email: String): Individual
+    fun findByFirstNameAndEmail(firstName: String, email: String): Individual?
 
 }

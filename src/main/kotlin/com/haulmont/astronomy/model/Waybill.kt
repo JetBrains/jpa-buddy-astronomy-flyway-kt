@@ -1,7 +1,7 @@
 package com.haulmont.astronomy.model
 
-import com.haulmont.astronomy.basemodel.BaseEntity
-import com.haulmont.astronomy.basemodel.Customer
+import com.haulmont.astronomy.model.basemodel.BaseEntity
+import org.hibernate.Hibernate
 import java.math.BigDecimal
 import javax.persistence.*
 
@@ -31,13 +31,22 @@ class Waybill : BaseEntity() {
     @JoinColumn(name = "carrier_id")
     var carrier: Carrier? = null
 
-    @OneToMany
-    @JoinColumn(name = "waybill_id")
-    var items: MutableList<WaybillItem>? = mutableListOf()
+    @OneToMany(mappedBy = "waybill")
+    var items: MutableList<WaybillItem> = mutableListOf()
 
     @Column(name = "total_weight")
     var totalWeight: Double? = null
 
     @Column(name = "total_charge", precision = 19, scale = 2)
     var totalCharge: BigDecimal? = null
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
+        other as Waybill
+
+        return id != null && id == other.id
+    }
+
+    override fun hashCode(): Int = 1707949113
 }

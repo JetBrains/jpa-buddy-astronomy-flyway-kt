@@ -3,28 +3,30 @@ package com.haulmont.astronomy.model
 import com.haulmont.astronomy.model.basemodel.BaseEntity
 import org.hibernate.Hibernate
 import javax.persistence.*
+import javax.validation.constraints.Email
 
-@Table(name = "carrier")
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-class Carrier : BaseEntity() {
+class Customer : BaseEntity() {
     @Column(name = "name")
     var name: String? = null
 
-    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
-    @JoinTable(
-        name = "carrier_spaceport",
-        joinColumns = [JoinColumn(name = "carrier_id")],
-        inverseJoinColumns = [JoinColumn(name = "spaceport_id")]
-    )
-    var spaceports: MutableList<Spaceport> = mutableListOf()
+    @Email
+    @Column(name = "email")
+    var email: String? = null
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "grade")
+    var grade: CustomerGrade? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
-        other as Carrier
+        other as Customer
 
         return id != null && id == other.id
     }
 
-    override fun hashCode(): Int = 1745767009
+    override fun hashCode(): Int = 339958611
 }

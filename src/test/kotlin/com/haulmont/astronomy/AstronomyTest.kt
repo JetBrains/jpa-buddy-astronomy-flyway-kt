@@ -1,9 +1,9 @@
 package com.haulmont.astronomy
 
-import com.haulmont.astronomy.basemodel.BaseEntity
-import com.haulmont.astronomy.basemodel.tableName
-import com.haulmont.astronomy.embeddable.Coordinates
-import com.haulmont.astronomy.enummodel.CustomerGrade
+import com.haulmont.astronomy.model.basemodel.BaseEntity
+import com.haulmont.astronomy.model.basemodel.tableName
+import com.haulmont.astronomy.model.Coordinates
+import com.haulmont.astronomy.model.CustomerGrade
 import com.haulmont.astronomy.model.*
 import com.haulmont.astronomy.repo.*
 import org.junit.jupiter.api.AfterEach
@@ -46,22 +46,24 @@ class AstronomyTest(
         }
         gasRepository.saveAll(mutableListOf(oxygen, nitrogen))
 
+        val atmosphere = Atmosphere().apply {
+            description = "Atmosphere in Test"
+            pressure = 100.0
+        }
+        atmosphereRepository.save(atmosphere)
+
         val oxygenGas = AtmosphericGas().apply {
             volume = 4.0
             gas = oxygen
+            this.atmosphere = atmosphere
         }
         val nitrogenGas = AtmosphericGas().apply {
             volume = 2.0
             gas = nitrogen
+            this.atmosphere = atmosphere
         }
         atmosphericGasRepository.saveAll(mutableListOf(oxygenGas, nitrogenGas))
 
-        val atmosphere = Atmosphere().apply {
-            description = "Atmosphere in Test"
-            pressure = 100.0
-            gases = mutableListOf(oxygenGas, nitrogenGas)
-        }
-        atmosphereRepository.save(atmosphere)
 
         val planet = Planet().also {
             it.name = "Planet"
@@ -142,11 +144,12 @@ class AstronomyTest(
 
     @Test
     internal fun testAtmosphereRepo() {
-        val count = atmosphereRepository.findAll().size
+        val allAtmospheres = atmosphereRepository.findAll()
+        val count = allAtmospheres.size
         assertEquals(1, count)
 
-        val atmosphere = atmosphereRepository.findAll().first()
-        val gases = atmosphereRepository.findAllAtmosphericGasesInAtmosphere(atmosphere)
+        val atmosphere = allAtmospheres.first()
+        val gases = atmosphereRepository.findAllGasesInAtmosphere(atmosphere)
         assertEquals(2, gases.size)
     }
 
@@ -169,15 +172,18 @@ class AstronomyTest(
     internal fun testCarrierAndSpaceportAndWaybillRepos() {
         initSpaceportAndCarrierAndWaybill()
 
-        val spaceports = spaceportRepository.findByIsDefaultEqualsOrderByNameAsc(true)
-        assertEquals(1, spaceports.size)
-        assertEquals("Space", spaceports.first().name)
+        try {
+            val spaceports = spaceportRepository.findByIsDefaultEqualsOrderByNameAsc(true)
+            assertEquals(1, spaceports.size)
+            assertEquals("Space", spaceports.first().name)
 
-        assertNotNull(carrierRepository.findByName("Vostok"))
+            assertNotNull(carrierRepository.findByName("Vostok"))
 
-        assertEquals(1, waybillRepository.findByTotalWeightGreaterThan(10.0).size)
+            assertEquals(1, waybillRepository.findByTotalWeightGreaterThan(10.0).size)
+        } finally {
+            destroySpaceportAndCarrierAndWaybill()
+        }
 
-        destroySpaceportAndCarrierAndWaybill()
     }
 
     @Test
@@ -191,10 +197,11 @@ class AstronomyTest(
 
     @Test
     internal fun testDiscountsRepo() {
-        val count = discountsRepository.findAll().size
+        val allDiscounts = discountsRepository.findAll()
+        val count = allDiscounts.size
         assertEquals(1, count)
 
-        val discounts = discountsRepository.findAll().first()
+        val discounts = allDiscounts.first()
         assertEquals(CustomerGrade.HIGH, discounts.grade)
 
         assertTrue(discountsRepository.existsByValueBetween(BigDecimal.ONE, BigDecimal.TEN))
@@ -205,8 +212,9 @@ class AstronomyTest(
         val gas = gasRepository.findByNameIs("Nitrogen")
         assertNotNull(gas)
 
-        assertEquals("Oxygen", gasRepository.findAll().first().name)
-        assertEquals(2, gasRepository.findAll().size)
+        val allGases = gasRepository.findAll()
+        assertEquals("Oxygen", allGases.first().name)
+        assertEquals(2, allGases.size)
     }
 
     @Test
@@ -217,15 +225,16 @@ class AstronomyTest(
         val individual = individualRepository.findByFirstNameAndEmail("Ivan", "ivanov@gmail.com")
         assertNotNull(individual)
 
-        assertEquals(CustomerGrade.MIDDLE, individual.grade)
+        assertEquals(CustomerGrade.MIDDLE, individual?.grade)
     }
 
     @Test
     internal fun testMoonRepo() {
-        val size = moonRepository.findAll().size
+        val allMoons = moonRepository.findAll()
+        val size = allMoons.size
         assertEquals(1, size)
 
-        val moon = moonRepository.findAll().first()
+        val moon = allMoons.first()
         assertEquals(moon, moonRepository.findByName("Moon"))
 
         val moons = moonRepository.findByPlanet_RingsEquals(false)
@@ -288,23 +297,23 @@ class AstronomyTest(
         waybillRepository.save(waybill)
     }
 
-    private fun destroySpaceportAndCarrierAndWaybill(){
+    private fun destroySpaceportAndCarrierAndWaybill() {
         val spaceport = spaceportRepository.findByName("Space")
         val carrier = carrierRepository.findByName("Vostok")
         val waybill = waybillRepository.findByReference("Reference")
 
-        spaceport.carriers = null
-        spaceport.moon = null
-        spaceport.planet = null
-        carrier.spaceports = null
-        waybill.carrier = null
-        waybill.departurePort = null
-        waybill.destinationPort = null
-        waybill.items = null
+        spaceport?.carriers = mutableListOf()
+        spaceport?.moon = null
+        spaceport?.planet = null
+        carrier?.spaceports = mutableListOf()
+        waybill?.carrier = null
+        waybill?.departurePort = null
+        waybill?.destinationPort = null
+        waybill?.items = mutableListOf()
 
-        spaceportRepository.save(spaceport)
-        carrierRepository.save(carrier)
-        waybillRepository.save(waybill)
+        spaceportRepository.save(spaceport!!)
+        carrierRepository.save(carrier!!)
+        waybillRepository.save(waybill!!)
     }
 }
 

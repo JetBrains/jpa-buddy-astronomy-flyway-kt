@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CarrierRepository : JpaRepository<Carrier, Long> {
 
-    fun findByName(name: String): Carrier
+    fun findByName(name: String): Carrier?
 
 }

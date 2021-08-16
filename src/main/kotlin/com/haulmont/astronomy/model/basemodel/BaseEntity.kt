@@ -1,4 +1,4 @@
-package com.haulmont.astronomy.basemodel
+package com.haulmont.astronomy.model.basemodel
 
 import java.io.Serializable
 import javax.persistence.*
