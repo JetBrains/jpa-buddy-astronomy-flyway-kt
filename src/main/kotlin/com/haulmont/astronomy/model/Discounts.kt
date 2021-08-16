@@ -11,7 +11,7 @@ class Discounts : BaseEntity() {
     @Column(name = "value", precision = 19, scale = 2)
     var value: BigDecimal? = null
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     @Column(name = "grade")
     var grade: CustomerGrade? = null
 

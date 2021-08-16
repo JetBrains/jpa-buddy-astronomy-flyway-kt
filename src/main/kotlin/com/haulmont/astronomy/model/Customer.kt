@@ -16,7 +16,7 @@ class Customer : BaseEntity() {
     @Column(name = "email")
     var email: String? = null
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     @Column(name = "grade")
     var grade: CustomerGrade? = null
 
