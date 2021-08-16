@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JpbDataSourceConfig">
-    <data-sources>
-      <data-source id="6d6e6068-eefb-48ff-aed7-6c63d59c6b58" name="astronomy-flyway-kt" url="jdbc:postgresql://localhost/astronomy-flyway-kt" driverClass="org.postgresql.Driver" />
-    </data-sources>
-  </component>
-</project>
