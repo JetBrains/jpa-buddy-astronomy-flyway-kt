@@ -11,23 +11,23 @@ class Waybill : BaseEntity() {
     @Column(name = "reference")
     var reference: String? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipper_id")
     var shipper: Customer? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consignee_id")
     var consignee: Customer? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departure_port_id")
     var departurePort: Spaceport? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination_port_id")
     var destinationPort: Spaceport? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carrier_id")
     var carrier: Carrier? = null
 

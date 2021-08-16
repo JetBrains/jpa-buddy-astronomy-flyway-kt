@@ -23,7 +23,7 @@ class WaybillItem : BaseEntity() {
     @Column(name = "charge", precision = 19, scale = 2)
     var charge: BigDecimal? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "waybill_id")
     var waybill: Waybill? = null
 

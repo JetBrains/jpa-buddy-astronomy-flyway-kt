@@ -10,11 +10,11 @@ class AtmosphericGas : BaseEntity() {
     @Column(name = "volume")
     var volume: Double? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gas_id")
     var gas: Gas? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "atmosphere_id")
     var atmosphere: Atmosphere? = null
 

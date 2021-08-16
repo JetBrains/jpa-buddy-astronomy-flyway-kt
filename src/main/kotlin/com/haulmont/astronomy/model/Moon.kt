@@ -11,7 +11,7 @@ class Moon : AstronomicalBody() {
     @JoinColumn(name = "atmosphere_id")
     var atmosphere: Atmosphere? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "planet_id")
     var planet: Planet? = null
 

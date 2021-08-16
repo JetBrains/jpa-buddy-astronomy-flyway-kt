@@ -10,11 +10,11 @@ class Spaceport : BaseEntity() {
     @Column(name = "name")
     var name: String? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "planet_id")
     var planet: Planet? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "moon_id")
     var moon: Moon? = null
 
