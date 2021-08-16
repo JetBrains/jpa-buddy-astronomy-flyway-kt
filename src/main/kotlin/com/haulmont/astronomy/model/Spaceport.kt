@@ -25,7 +25,7 @@ class Spaceport : BaseEntity() {
     var coordinates: Coordinates? = null
 
     @ManyToMany(mappedBy = "spaceports", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
-    var carriers: MutableList<Carrier> = mutableListOf()
+    var carriers: MutableSet<Carrier> = mutableSetOf()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

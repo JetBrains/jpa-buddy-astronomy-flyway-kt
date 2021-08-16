@@ -16,7 +16,7 @@ class Carrier : BaseEntity() {
         joinColumns = [JoinColumn(name = "carrier_id")],
         inverseJoinColumns = [JoinColumn(name = "spaceport_id")]
     )
-    var spaceports: MutableList<Spaceport> = mutableListOf()
+    var spaceports: MutableSet<Spaceport> = mutableSetOf()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

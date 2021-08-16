@@ -277,8 +277,8 @@ class AstronomyTest(
             name = "Vostok"
         }
 
-        spaceport.carriers = mutableListOf(carrier)
-        carrier.spaceports = mutableListOf(spaceport)
+        spaceport.carriers = mutableSetOf(carrier)
+        carrier.spaceports = mutableSetOf(spaceport)
 
         val waybill = Waybill().also {
             it.reference = "Reference"
@@ -302,10 +302,10 @@ class AstronomyTest(
         val carrier = carrierRepository.findByName("Vostok")
         val waybill = waybillRepository.findByReference("Reference")
 
-        spaceport?.carriers = mutableListOf()
+        spaceport?.carriers = mutableSetOf()
         spaceport?.moon = null
         spaceport?.planet = null
-        carrier?.spaceports = mutableListOf()
+        carrier?.spaceports = mutableSetOf()
         waybill?.carrier = null
         waybill?.departurePort = null
         waybill?.destinationPort = null
