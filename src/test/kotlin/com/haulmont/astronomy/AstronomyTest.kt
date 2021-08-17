@@ -20,20 +20,20 @@ import kotlin.reflect.KClass
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AstronomyTest(
-    @Autowired val atmosphereRepository: AtmosphereRepository,
-    @Autowired val atmosphericGasRepository: AtmosphericGasRepository,
-    @Autowired val carrierRepository: CarrierRepository,
-    @Autowired val companyRepository: CompanyRepository,
-    @Autowired val discountsRepository: DiscountsRepository,
-    @Autowired val gasRepository: GasRepository,
-    @Autowired val individualRepository: IndividualRepository,
-    @Autowired val moonRepository: MoonRepository,
-    @Autowired val planetRepository: PlanetRepository,
-    @Autowired val spaceportRepository: SpaceportRepository,
-    @Autowired val waybillRepository: WaybillRepository,
-    @Autowired val waybillItemRepository: WaybillItemRepository,
-    @Autowired val jdbcTemplate: JdbcTemplate
+class AstronomyTest @Autowired constructor(
+    val atmosphereRepository: AtmosphereRepository,
+    val atmosphericGasRepository: AtmosphericGasRepository,
+    val carrierRepository: CarrierRepository,
+    val companyRepository: CompanyRepository,
+    val discountsRepository: DiscountsRepository,
+    val gasRepository: GasRepository,
+    val individualRepository: IndividualRepository,
+    val moonRepository: MoonRepository,
+    val planetRepository: PlanetRepository,
+    val spaceportRepository: SpaceportRepository,
+    val waybillRepository: WaybillRepository,
+    val waybillItemRepository: WaybillItemRepository,
+    val jdbcTemplate: JdbcTemplate
 ) {
 
     @BeforeEach
